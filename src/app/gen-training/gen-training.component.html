@@ -1,13 +1,38 @@
-<div class="field">
-  <label class="label">Json generator</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="Text input">
+<p class="title is-1 has-text-centered">Json training generator</p>
+<div class="container pt-3 px-2">
+  <!-- Main container -->
+  <div *ngFor='let element of elements'>
+    <nav class="columns">
+      <!-- Left side -->
+      <div class="column is-half">
+        <div class="level-item">
+          <div class="field has-addons">
+            <p class="control">
+              <input class="input" type="text" placeholder="Inserisci la domanda">
+            </p>
+            <p class="control">
+              <button class="button" (click)="getFilename()">Cerca</button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div class="column is-half">
+        <div *ngFor='let filename of filenames[element]'>
+          <input type="checkbox">
+          {{filename}}
+        </div>
+      </div>
+    </nav>
   </div>
 
-  <div *ngFor='let filename of filenames'>
-    <label class="checkbox">
-      <input type="checkbox">
-      {{filename}}
-    </label>
-  </div>
+
 </div>
+<footer class="footer" id="fixedBottom">
+  <div class="content has-text-centered">
+    <p>
+      footer bellissimo
+    </p>
+  </div>
+</footer>

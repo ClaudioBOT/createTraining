@@ -8,29 +8,38 @@ import { WatsonService } from '../servicies/watson/watson.service';
   styleUrls: ['./gen-training.component.css']
 })
 export class GenTrainingComponent implements OnInit {
-  queryRes: any;
+  elements: any;
   filenames: any;
+  query: string;
 
   constructor(
     private watson: WatsonService
   ) { }
 
   ngOnInit(): void {
+    this.elements = [0];
     this.filenames = [];
-    this.watson.getQueryResults("Come effettua l'azienda l'analisi del contesto")
+
+    // da cancellare
+    this.filenames = [
+      ["LGO-01 LGO - Linee Guida Organizzative ISO9001_2015 - Revisione 1.PDF","Anagrafica processo MIGL - MIsurazioni, analisi e Miglioramento.pdf","RS-2021 Riesame del Sistema Qualità - Anno 2019_1_12.pdf"]
+    ]
+
+  }
+
+  getFilename(query) {
+    console.log("query");
+    let tmp = [];
+    this.watson.getQueryResults(query)
       .subscribe((data: any) => {
         data.results.forEach(element => {
           //console.log(element);
-          this.filenames.push(element.title)
+          tmp.push(element.extracted_metadata.filename)
         });
-        console.log(this.filenames)
-      });
-
-
-    this.queryRes=[
-      "ciao",
-      "pino"
-    ]
+        this.filenames.push(tmp);
+        console.log(this.filenames);
+      }
+    );
   }
 
 }

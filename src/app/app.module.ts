@@ -7,13 +7,6 @@ import { GenTrainingComponent } from './gen-training/gen-training.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-
-
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,9 +16,6 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatSelectModule,
     HttpClientModule
   ],
   providers: [],

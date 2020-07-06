@@ -1,0 +1,6 @@
+#fixedBottom{
+  bottom: 0;
+  position: -webkit-fixed;
+  position: fixed;
+  width: 100%;
+}
