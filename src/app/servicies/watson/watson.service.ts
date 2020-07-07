@@ -10,14 +10,20 @@ export class WatsonService {
   constructor(
     private http: HttpClient
   ) {
-    this.apiUrl = "https://eu-de.functions.cloud.ibm.com/api/v1/web/a460e7f1-f116-4da3-bd5f-80a00b00c435/Watson/DiscoveryNLQ.json"
+    this.apiUrl = "https://eu-de.functions.cloud.ibm.com/api/v1/web/a460e7f1-f116-4da3-bd5f-80a00b00c435"
   }
 
   getQueryResults (query){
-    return this.http.get(this.apiUrl, {
+    return this.http.get( this.apiUrl + "/Watson/DiscoveryNLQ.json", {
       params: {
         query: query
       }
+    });
+  }
+
+  sendToCOS(data) {
+    return this.http.get(this.apiUrl + "/Watson/WriteCOS.json", {
+      params: { file: JSON.stringify(data)}
     });
   }
 }

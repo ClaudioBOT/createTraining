@@ -1,34 +1,33 @@
-<p class="title is-1 has-text-centered">Json training generator</p>
-<div class="container pt-3 px-2">
-  <!-- Main container -->
-  <div *ngFor='let element of elements'>
-    <nav class="columns">
-      <!-- Left side -->
-      <div class="column is-half">
-        <div class="level-item">
-          <div class="field has-addons">
-            <p class="control">
-              <input class="input" type="text" placeholder="Inserisci la domanda">
-            </p>
-            <p class="control">
-              <button class="button" (click)="getFilename()">Cerca</button>
-            </p>
 <div id="scroll">
+  <p class="title is-1 has-text-centered">Json training generator</p>
+  <div class="container pt-3">
+    <!-- Main container -->
+    <div *ngFor='let element of elements; let i = index'>
+      <nav class="columns">
+        <!-- Left side -->
+        <div class="column is-half">
+          <div class="level-item">
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input" id="query-{{ i }}" type="text" placeholder="Inserisci la domanda">
+              </p>
+              <p class="control">
+                <button class="button" (click)="getFilename(element)">Cerca</button>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Right side -->
-      <div class="column is-half">
-        <div *ngFor='let filename of filenames[element]'>
-          <input type="checkbox">
-          {{filename}}
+        <!-- Right side -->
+        <div class="column is-half">
+          <div *ngFor='let filename of element.filenames; let j = index'>
+            <input type="checkbox" id="check-{{ i }}-{{ j }}">
+            {{filename}}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </div>
-
-
 </div>
 <footer class="footer pb-2 pt-3" id="fixedBottom">
   <div class="has-text-centered">

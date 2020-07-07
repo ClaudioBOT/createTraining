@@ -8,16 +8,14 @@ import { WatsonService } from './servicies/watson/watson.service';
 })
 export class AppComponent {
   elements: any;
-  filenames: any;
-  query: string;
 
   constructor(
     private watson: WatsonService
   ) { }
 
   ngOnInit(): void {
-    this.elements = [0];
-    this.filenames = [];
+    this.elements = [];
+    this.addElement();
     this.setSize();
   }
 
@@ -26,10 +24,6 @@ export class AppComponent {
     this.setSize();
   }
 
-    // da cancellare
-    this.filenames = [
-      ["LGO-01 LGO - Linee Guida Organizzative ISO9001_2015 - Revisione 1.PDF","Anagrafica processo MIGL - MIsurazioni, analisi e Miglioramento.pdf","RS-2021 Riesame del Sistema Qualità - Anno 2019_1_12.pdf"]
-    ]
   setSize(){
     document.getElementById('scroll').style.maxHeight = (window.innerHeight - document.getElementById('fixedBottom').clientHeight) + 'px';
   }
@@ -45,19 +39,59 @@ export class AppComponent {
     }, 200);
   }
 
+  getFilename(element) {
+    element.query = (<HTMLInputElement>document.getElementById(`query-${element.num}`)).value;
+    console.log(element);
+    element.filenames = [];
+
+    this.watson.getQueryResults(element.query)
+      .subscribe((data: any) => {
+        data.results.forEach(data => {
+          element.filenames.push(data.extracted_metadata.filename);
+        });
+        this.showBar(false);
+      }
+    );
   }
 
-  getFilename(query) {
-    console.log("query");
-    let tmp = [];
-    this.watson.getQueryResults(query)
+  addElement(){
+    this.elements.push({
+      query:"",
+      num: this.elements.length,
+      filenames:[]
+    });
+    this.showBar(true);
+  }
+
+  createJSON(){
+    let data = { collection : [] };
+    this.elements.forEach((element, indexQ) => {
+      let tmp = [];
+      element.filenames.forEach((filename, indexF) => {
+        //console.log(document.getElementById(`check-${indexQ}-${indexF}`).checked);
+        if ((<HTMLInputElement>document.getElementById(`check-${indexQ}-${indexF}`)).checked == true){ // (<HTMLInputElement> severve perchè semnnò typesafe stampa errore, quando in realt non c'è
+          tmp.push(filename);
+        }
+      });
+      data.collection.push({
+          query: element.query,
+          expected_result: tmp
+      });
+    });
+    return (data);
+  }
+
+  sendToCOS(){
+    let file = this.createJSON();
+    console.log(file);
+    this.watson.sendToCOS(file)
       .subscribe((data: any) => {
-        data.results.forEach(element => {
-          //console.log(element);
-          tmp.push(element.extracted_metadata.filename)
+        console.log(data)
+        /*
+        data.results.forEach(data => {
+          console.log(data);
         });
-        this.filenames.push(tmp);
-        console.log(this.filenames);
+        */
       }
     );
   }
