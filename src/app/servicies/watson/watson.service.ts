@@ -21,9 +21,12 @@ export class WatsonService {
     });
   }
 
-  sendToCOS(data) {
+  sendToCOS(file, collection) {
     return this.http.get(this.apiUrl + "/Watson/WriteCOS.json", {
-      params: { file: JSON.stringify(data)}
+      params: {
+        file: JSON.stringify(file),
+        collection: collection
+      }
     });
   }
 }

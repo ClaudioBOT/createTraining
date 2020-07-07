@@ -84,7 +84,7 @@ export class AppComponent {
   sendToCOS(){
     let file = this.createJSON();
     console.log(file);
-    this.watson.sendToCOS(file)
+    this.watson.sendToCOS(file,"test_ricerca_e_sviluppo")
       .subscribe((data: any) => {
         console.log(data)
         /*
