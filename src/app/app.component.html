@@ -13,6 +13,7 @@
             <p class="control">
               <button class="button" (click)="getFilename()">Cerca</button>
             </p>
+<div id="scroll">
           </div>
         </div>
       </div>
@@ -29,10 +30,9 @@
 
 
 </div>
-<footer class="footer" id="fixedBottom">
-  <div class="content has-text-centered">
-    <p>
-      footer bellissimo
-    </p>
+<footer class="footer pb-2 pt-3" id="fixedBottom">
+  <div class="has-text-centered">
+    <button (click)="addElement()" class="button is-primary" id="btn">Aggiungi domanda</button>
+    <button (click)="sendToCOS()" class="button is-primary" id="btn">Invia al COS</button>
   </div>
 </footer>

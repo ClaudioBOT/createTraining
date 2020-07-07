@@ -1,0 +1,19 @@
+#fixedBottom{
+  bottom: 0;
+  position: -webkit-fixed;
+  position: fixed;
+  width: 100%;
+}
+
+#btn{
+  margin: 5px;
+}
+
+#scroll {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  max-height: 100%;
+  max-width: 100%;
+  scroll-behavior: smooth;
+  z-index: -1;
+}

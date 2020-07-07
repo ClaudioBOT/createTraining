@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { HostListener, Component } from '@angular/core';
 import { WatsonService } from './servicies/watson/watson.service';
 
 @Component({
@@ -18,11 +18,32 @@ export class AppComponent {
   ngOnInit(): void {
     this.elements = [0];
     this.filenames = [];
+    this.setSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setSize();
+  }
 
     // da cancellare
     this.filenames = [
       ["LGO-01 LGO - Linee Guida Organizzative ISO9001_2015 - Revisione 1.PDF","Anagrafica processo MIGL - MIsurazioni, analisi e Miglioramento.pdf","RS-2021 Riesame del Sistema Qualità - Anno 2019_1_12.pdf"]
     ]
+  setSize(){
+    document.getElementById('scroll').style.maxHeight = (window.innerHeight - document.getElementById('fixedBottom').clientHeight) + 'px';
+  }
+
+  showBar(scrollToLast){
+    setTimeout( () => {
+      let querysize = document.getElementById('scroll').clientHeight;
+      let pagesize = window.innerHeight - document.getElementById('fixedBottom').clientHeight;
+      if (pagesize <= querysize) {
+        document.getElementById('scroll').style.overflowY = "auto";
+        if (scrollToLast == true) document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
+      }
+    }, 200);
+  }
 
   }
 
