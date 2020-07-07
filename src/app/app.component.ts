@@ -58,6 +58,7 @@ export class AppComponent {
     this.elements.push({
       query:"",
       num: this.elements.length,
+      show: true,
       filenames:[]
     });
     this.showBar(true);
@@ -67,32 +68,41 @@ export class AppComponent {
     let data = { collection : [] };
     this.elements.forEach((element, indexQ) => {
       let tmp = [];
-      element.filenames.forEach((filename, indexF) => {
-        //console.log(document.getElementById(`check-${indexQ}-${indexF}`).checked);
-        if ((<HTMLInputElement>document.getElementById(`check-${indexQ}-${indexF}`)).checked == true){ // (<HTMLInputElement> severve perchè semnnò typesafe stampa errore, quando in realt non c'è
-          tmp.push(filename);
-        }
-      });
-      data.collection.push({
-          query: element.query,
-          expected_result: tmp
-      });
+      if (element.query != ""){
+        element.filenames.forEach((filename, indexF) => {
+          //console.log(document.getElementById(`check-${indexQ}-${indexF}`).checked);
+          if ((<HTMLInputElement>document.getElementById(`check-${indexQ}-${indexF}`)).checked == true){ // (<HTMLInputElement> severve perchè semnnò typesafe stampa errore, quando in realt non c'è
+            tmp.push(filename);
+          }
+        });
+        data.collection.push({
+            query: element.query,
+            expected_result: tmp
+        });
+      }
     });
     return (data);
   }
 
+  hideEmptyQuery(){
+    this.elements.forEach((element) => {
+      if (element.query == "") element.show = false;
+    });
+  }
+
   sendToCOS(){
+    this.hideEmptyQuery();
     let file = this.createJSON();
     console.log(file);
-    this.watson.sendToCOS(file,"test_ricerca_e_sviluppo")
-      .subscribe((data: any) => {
-        console.log(data)
-        /*
-        data.results.forEach(data => {
-          console.log(data);
-        });
-        */
-      }
-    );
+    if (file.collection > 0){
+      this.watson.sendToCOS(file,"test_ricerca_e_sviluppo")
+        .subscribe((data: any) => {
+          alert(`Il file è stato salvato come ${data.filename}`);
+        }
+      );
+    }
+    else {
+      alert("Non ci sono delle domande valide");
+    }
   }
 }

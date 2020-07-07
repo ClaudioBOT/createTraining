@@ -3,7 +3,7 @@
   <div class="container pt-3">
     <!-- Main container -->
     <div *ngFor='let element of elements; let i = index'>
-      <nav class="columns">
+      <nav class="columns" *ngIf="element.show">
         <!-- Left side -->
         <div class="column is-half">
           <div class="level-item">
