@@ -29,14 +29,21 @@ export class AppComponent {
   }
 
   setSize(){
-    document.getElementById('scroll').style.maxHeight = (window.innerHeight - document.getElementById('fixedBottom').clientHeight) + 'px';
+    if (this.collection != '') {
+      document.getElementById('scroll').style.maxHeight = (window.innerHeight - document.getElementById('fixedBottom').clientHeight) + 'px';
+    }
+    else {
+      document.getElementById('scroll').style.maxHeight = "100%";
+    }
   }
 
   showBar(scrollToLast){
     this.setSize();
     setTimeout( () => {
       let querysize = document.getElementById('scroll').clientHeight;
-      let pagesize = window.innerHeight - document.getElementById('fixedBottom').clientHeight;
+      let fixed = 0;
+      if (this.collection != '')  fixed = document.getElementById('fixedBottom').clientHeight;
+      let pagesize = window.innerHeight - fixed;
       if (pagesize <= querysize) {
         document.getElementById('scroll').style.overflowY = "auto";
         if (scrollToLast == true) document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
@@ -111,7 +118,7 @@ export class AppComponent {
     let file = this.createJSON();
     console.log(file);
     if (file.collection.length > 0){
-      this.watson.sendToCOS(file,collection)
+      this.watson.sendToCOS(file,this.collection)
         .subscribe((data: any) => {
           alert(`Il file è stato salvato come ${data.filename}`);
         }
