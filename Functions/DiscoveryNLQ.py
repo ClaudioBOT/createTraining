@@ -25,7 +25,8 @@ def main(param):
     } # mancano le chiavi
 
     collection_names = ["Test_ricerca_e_sviluppo", "qualiware_test", "Stefal"]
-    collection_params = credentials[collection_names[0]]
+    if (param["collection"] in collection_names): collection_params = credentials[param["collection"]]
+    else: return ({"ERRORE": "il collection name non è corretto!"})
 
     discovery = DiscoveryV1(
         version="2020-05-22",

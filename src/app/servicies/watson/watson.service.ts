@@ -13,10 +13,11 @@ export class WatsonService {
     this.apiUrl = "https://eu-de.functions.cloud.ibm.com/api/v1/web/a460e7f1-f116-4da3-bd5f-80a00b00c435"
   }
 
-  getQueryResults (query){
+  getQueryResults (query, collection){
     return this.http.get( this.apiUrl + "/Watson/DiscoveryNLQ.json", {
       params: {
-        query: query
+        query: query,
+        collection: collection
       }
     });
   }

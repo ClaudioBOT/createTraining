@@ -8,6 +8,8 @@ import { WatsonService } from './servicies/watson/watson.service';
 })
 export class AppComponent {
   elements: any;
+  collection_names: any;
+  collection: string;
 
   constructor(
     private watson: WatsonService
@@ -15,6 +17,8 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.elements = [];
+    this.collection_names = ["Test_ricerca_e_sviluppo", "qualiware_test", "Stefal"];
+    this.collection = "";
     this.addElement();
     this.setSize();
   }
@@ -94,8 +98,8 @@ export class AppComponent {
     this.hideEmptyQuery();
     let file = this.createJSON();
     console.log(file);
-    if (file.collection > 0){
-      this.watson.sendToCOS(file,"test_ricerca_e_sviluppo")
+    if (file.collection.length > 0){
+      this.watson.sendToCOS(file,collection)
         .subscribe((data: any) => {
           alert(`Il file è stato salvato come ${data.filename}`);
         }
@@ -104,5 +108,9 @@ export class AppComponent {
     else {
       alert("Non ci sono delle domande valide");
     }
+  }
+
+  setCollection(collection){
+    this.collection = collection;
   }
 }

@@ -14,6 +14,15 @@
               <p class="control">
                 <button class="button" (click)="getFilename(element)">Cerca</button>
               </p>
+    <div *ngIf="collection == ''">
+      <h5 class="title is-5 has-text-centered">Scegli la collection</h5>
+      <div class="buttons is-centered" style="margin-bottom: 0px;">
+        <div *ngFor="let collection_name of collection_names">
+          <button (click)="setCollection(collection_name)" class="button is-primary" id="btn">{{collection_name}}</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="collection != ''">
             </div>
           </div>
         </div>
@@ -26,11 +35,12 @@
           </div>
         </div>
       </nav>
+      </div>
     </div>
   </div>
 </div>
-<footer class="footer pb-2 pt-3" id="fixedBottom">
-  <div class="has-text-centered">
+<footer  *ngIf="collection != ''" class="footer pb-3 pt-3" id="fixedBottom">
+  <div class="buttons is-centered">
     <button (click)="addElement()" class="button is-primary" id="btn">Aggiungi domanda</button>
     <button (click)="sendToCOS()" class="button is-primary" id="btn">Invia al COS</button>
   </div>
