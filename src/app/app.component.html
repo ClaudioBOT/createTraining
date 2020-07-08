@@ -1,19 +1,7 @@
 <div id="scroll">
   <p class="title is-1 has-text-centered">Json training generator</p>
   <div class="container pt-3">
-    <!-- Main container -->
-    <div *ngFor='let element of elements; let i = index'>
-      <nav class="columns" *ngIf="element.show">
-        <!-- Left side -->
-        <div class="column is-half">
-          <div class="level-item">
-            <div class="field has-addons">
-              <p class="control">
-                <input class="input" id="query-{{ i }}" type="text" placeholder="Inserisci la domanda">
-              </p>
-              <p class="control">
-                <button class="button" (click)="getFilename(element)">Cerca</button>
-              </p>
+
     <div *ngIf="collection == ''">
       <h5 class="title is-5 has-text-centered">Scegli la collection</h5>
       <div class="buttons is-centered" style="margin-bottom: 0px;">
@@ -22,21 +10,42 @@
         </div>
       </div>
     </div>
+
     <div *ngIf="collection != ''">
+      <!-- Main container -->
+      <h4 class="subtitle is-4 has-text-centered">{{collection}}</h4>
+      <div *ngFor='let element of elements; let i = index'>
+        <nav class="columns" *ngIf="element.show">
+          <!-- Left side -->
+          <div class="column is-half">
+            <div class="level-item">
+              <div class="field has-addons">
+                <p class="control">
+                  <input class="input" id="query-{{ i }}" type="text" placeholder="Inserisci la domanda">
+                </p>
+                <p class="control">
+                  <button class="button" (click)="getFilename(element)">Cerca</button>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Right side -->
-        <div class="column is-half">
-          <div *ngFor='let filename of element.filenames; let j = index'>
-            <input type="checkbox" id="check-{{ i }}-{{ j }}">
-            {{filename}}
+          <!-- Right side -->
+          <div class="column is-half">
+            <div class="box" *ngIf="element.state == 'searching' || element.state == 'ended'">
+              <h5 class="title is-5 has-text-centered">{{element.error == undefined ? element.query : element.error}}</h5>
+              <progress class="progress is-small is-primary" max="100" *ngIf="element.state == 'searching'">15%</progress>
+              <h6 class="subtitle is-6 has-text-centered" *ngIf="element.state == 'ended' && element.filenames.length == 0 && element.error == undefined">La domanda non ha prodotto risultati</h6>
+              <div *ngFor='let filename of element.filenames; let j = index'>
+                <input type="checkbox" id="check-{{ i }}-{{ j }}" name="check-{{ i }}-{{ j }}">
+                <label for="check-{{ i }}-{{ j }}">{{filename}}</label>
+              </div>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
       </div>
     </div>
+
   </div>
 </div>
 <footer  *ngIf="collection != ''" class="footer pb-3 pt-3" id="fixedBottom">
