@@ -51,7 +51,8 @@ export class AppComponent {
     }, 200);
   }
 
-  getFilename(element) {
+  getFilename(event, element) {
+    if (event.type != "click" && (event.type != "keyup" || event.code != "Enter")) return (false);
     element.query = (<HTMLInputElement>document.getElementById(`query-${element.num}`)).value;
     console.log(element);
     element.filenames = [];
