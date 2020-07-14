@@ -72,7 +72,8 @@ export class AppComponent {
     }
     else {
         element.error="Non si possono avere domande vuote";
-        element.state = "ended"
+        element.state = "ended";
+        this.showBar(false);
     }
   }
 

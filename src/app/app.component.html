@@ -1,9 +1,14 @@
 <div id="scroll">
-  <p class="title is-1 has-text-centered">Json training generator</p>
-  <div class="container pt-3">
+
+  <p class="title is-1 has-text-centered inline">
+    <span class="has-text-primary">Json</span>
+    training generator
+  </p>
+
+  <div class="container is-fluid">
 
     <div *ngIf="collection == ''">
-      <h5 class="title is-5 has-text-centered">Scegli la collection</h5>
+      <h4 class="subtitle is-4 has-text-centered">Scegli la collection</h4>
       <div class="buttons is-centered" style="margin-bottom: 0px;">
         <div *ngFor="let collection_name of collection_names">
           <button (click)="setCollection(collection_name)" class="button is-primary is-outlined" id="btn">{{collection_name}}</button>
@@ -37,8 +42,8 @@
               <progress class="progress is-small is-primary" max="100" *ngIf="element.state == 'searching'">15%</progress>
               <h6 class="subtitle is-6 has-text-centered" *ngIf="element.state == 'ended' && element.filenames.length == 0 && element.error == undefined">La domanda non ha prodotto risultati</h6>
               <div *ngFor='let filename of element.filenames; let j = index'>
-                <input type="checkbox" id="check-{{ i }}-{{ j }}" name="check-{{ i }}-{{ j }}">
-                <label for="check-{{ i }}-{{ j }}">{{filename}}</label>
+                <input class="is-checkradio" type="checkbox" id="check-{{ i }}-{{ j }}" name="check-{{ i }}-{{ j }}">
+                <label for="check-{{ i }}-{{ j }}"> {{filename}}</label>
               </div>
             </div>
           </div>
