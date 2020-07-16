@@ -17,7 +17,11 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.elements = [];
-    this.collection_names = ["Test_ricerca_e_sviluppo", "qualiware_test", "Stefal"];
+    this.collection_names = [];
+    this.watson.getCollectionNames()
+      .subscribe((data: any) => {
+        this.collection_names = data.collection_names;
+      });
     this.collection = "";
     this.addElement();
     this.setSize();

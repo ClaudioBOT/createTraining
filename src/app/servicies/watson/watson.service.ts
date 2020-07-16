@@ -30,4 +30,8 @@ export class WatsonService {
       }
     });
   }
+
+  getCollectionNames(){
+    return this.http.get( this.apiUrl + "/Watson/GetCatalogList.json");
+  }
 }
